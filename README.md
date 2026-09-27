@@ -179,5 +179,5 @@ Workflow [`.github/workflows/ci.yml`](.github/workflows/ci.yml) запускае
 Ссылка на последний успешный pipeline:
 
 ```text
-https://github.com/USERNAME/REPOSITORY/actions/runs/RUN_ID
+https://github.com/nifreebie/information-secutiry-lab1/actions/runs/36349103553/job/108704143569
 ```
