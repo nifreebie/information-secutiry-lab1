@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: secure-log-api
+  datasource:
+    url: jdbc:sqlite:securelog.db
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: false
+
+app:
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration-seconds: ${JWT_EXPIRATION_SECONDS:3600}
+
+server:
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        secure: true
