@@ -14,7 +14,7 @@ permissions:
 jobs:
   test-and-security:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 50
     env:
       JWT_SECRET: ci-only-secret-value-with-at-least-thirty-two-bytes
       NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
