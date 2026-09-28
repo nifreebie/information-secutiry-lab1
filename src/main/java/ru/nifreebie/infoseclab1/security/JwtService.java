@@ -1,5 +1,6 @@
 package ru.nifreebie.infoseclab1.security;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.nifreebie.infoseclab1.model.User;
@@ -28,6 +29,7 @@ public final class JwtService {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final SecretKeySpec signingKey;
+    @Getter
     private final long expirationSeconds;
 
     public JwtService(
@@ -79,14 +81,14 @@ public final class JwtService {
 
             JsonNode header = objectMapper.readTree(BASE64_URL_DECODER.decode(parts[0]));
             JsonNode payload = objectMapper.readTree(BASE64_URL_DECODER.decode(parts[1]));
-            if (!"HS256".equals(header.path("alg").asText())
-                    || !ISSUER.equals(payload.path("iss").asText())
+            if (!"HS256".equals(header.path("alg").asString())
+                    || !ISSUER.equals(payload.path("iss").asString())
                     || payload.path("exp").asLong(0) <= Instant.now().getEpochSecond()) {
                 throw new JwtAuthenticationException();
             }
 
-            String username = payload.path("sub").asText("");
-            UUID userId = UUID.fromString(payload.path("uid").asText(""));
+            String username = payload.path("sub").asString("");
+            UUID userId = UUID.fromString(payload.path("uid").asString(""));
             if (username.isBlank()) {
                 throw new JwtAuthenticationException();
             }
@@ -96,10 +98,6 @@ public final class JwtService {
         } catch (GeneralSecurityException | JacksonException | IllegalArgumentException exception) {
             throw new JwtAuthenticationException();
         }
-    }
-
-    public long getExpirationSeconds() {
-        return expirationSeconds;
     }
 
     private byte[] sign(String value) throws GeneralSecurityException {
