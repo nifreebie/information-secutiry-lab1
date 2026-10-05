@@ -47,7 +47,7 @@ public class SecurityConfiguration {
                                     response, HttpServletResponse.SC_FORBIDDEN, "Access is denied"
                             )))
                     .authorizeHttpRequests(authorize -> authorize
-                            .requestMatchers("/auth/register", "/auth/login", "/error").permitAll()
+                            .requestMatchers("/auth/register", "/auth/login").permitAll()
                             .anyRequest().authenticated())
                     .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                     .build();
